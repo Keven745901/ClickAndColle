@@ -29,7 +29,7 @@ class Contenir
     private $idCommande;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="contenirs")
+     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="contenirs",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $idArticle;

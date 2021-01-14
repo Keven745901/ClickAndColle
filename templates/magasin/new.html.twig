@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Magasin{% endblock %}
+{% block title %}Magasin{% endblock %}
 
 {% block body %}
-    <h1>Create new Magasin</h1>
+    <center><h1>Créer magasin</h1>
 
     {{ include('magasin/_form.html.twig') }}
-
-    <a href="{{ path('magasin_index') }}">back to list</a>
+    <br />
+    <a href="{{ path('magasin_index') }}"><input type="button" value="Retour"></a></center>
 {% endblock %}

@@ -25,7 +25,7 @@ class Article
     private $prix;
 
     /**
-     * @ORM\ManyToOne(targetEntity=TypeArticle::class, inversedBy="articles")
+     * @ORM\ManyToOne(targetEntity=TypeArticle::class, inversedBy="articles",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $idTypeArticle;

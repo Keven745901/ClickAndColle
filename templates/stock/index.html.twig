@@ -1,37 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Stock index{% endblock %}
+{% block title %}Stock{% endblock %}
 
 {% block body %}
-    <h1>Stock index</h1>
-
+    <center><h1>Liste des stocks</h1>
+    <br /><br />
+    <a href="{{ path('stock_new') }}"><input type="button" value="Ajout d'un nouveau stock"></a>
+    <a href="{{ path('magasin_index') }}"><input type="button" value="Retour"></a></center>
     <table class="table">
         <thead>
             <tr>
                 <th>Produit</th>
                 <th>Magasin</th>
                 <th>Quantite</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for stock in stocks %}
             <tr>
-                <td>{{ stock.getIdArticle() }}</td>
-                <td>{{ stock.getIdMagasin() }}</td>
-                <td>{{ stock.quantite }}</td>
+                <td><center>{{ stock.getIdArticle() }}</center></td>
+                <td><center>{{ stock.getIdMagasin() }}</center></td>
+                <td><center>{{ stock.quantite }}</center></td>
                 <td>
-                    <a href="{{ path('stock_show', {'id': stock.id}) }}">show</a>
-                    <a href="{{ path('stock_edit', {'id': stock.id}) }}">edit</a>
+                    <center><a href="{{ path('stock_edit', {'id': stock.id}) }}"><input type="button" value="Modifier stock"></a></center>
                 </td>
+                <td><center>{{ include('stock/_delete_form.html.twig') }}</center></td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun stock disponible</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('stock_new') }}">Create new</a>
+    <br />
 {% endblock %}

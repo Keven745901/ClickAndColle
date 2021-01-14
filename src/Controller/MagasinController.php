@@ -69,13 +69,24 @@ class MagasinController extends AbstractController
     
     public function show(Request $request, Magasin $magasin, ArticleRepository $produit): Response
     {
+        $session = $request->getSession();
+
         if($request->query->get('produit') !== null)
         {
+            if($session->get('magasin') === null){
+                $session->set('magasin', $magasin->getId());
+            }
+
             $p = $request->query->get('produit');
-            $session = $request->getSession();
             
+
             $temp = [];
-            $temp = unserialize($session->get('panier'));
+            if($session->get('magasin') == $magasin->getId()){
+                $temp = unserialize($session->get('panier'));
+            }
+            else{
+                $session->set('magasin', null);
+            }
             
             $temp[] = $produit->find($p);
             $produit->find($p)->getIdTypeArticle()->getLibelle(); //??????????????????????????????

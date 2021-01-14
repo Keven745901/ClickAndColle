@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Magasin{% endblock %}
+{% block title %}Modifier Magasin{% endblock %}
 
 {% block body %}
-    <h1>Edit Magasin</h1>
+    <center><h1>Modifier Magasin</h1>
+    <br /><br /><br />
+    {{ include('magasin/_form.html.twig', {'button_label': 'Mise à jour'}) }}
+    <br />
+    <a href="{{ path('magasin_index') }}"><input type="button" value="Retour"></a></center>
 
-    {{ include('magasin/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('magasin_index') }}">back to list</a>
-
-    {{ include('magasin/_delete_form.html.twig') }}
 {% endblock %}

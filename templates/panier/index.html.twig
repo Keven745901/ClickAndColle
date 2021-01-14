@@ -8,12 +8,16 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <h1>Mon panier ✅</h1>
-    <ul>
-    {% for item in panier %}
-        <li>{{ item.idTypeArticle.libelle }}</li>    
-    {% endfor %}
-    </ul>
-</div>
+<form action="{{ path('commander') }}" method="get">
+    <div>
+        <h1>Mon panier ✅</h1>
+        <ul>
+        {% for i in 0..panier|length-1 %}
+            <li>{{ panier[i].idTypeArticle.libelle }} ({{ panier[i].prix }} €) Quantité : <input type=text value=1 name=txt{{i}}> </li>
+            
+        {% endfor %}
+        </ul>
+        <input type="submit" value="Commander">
+    </div>
+</form>
 {% endblock %}
