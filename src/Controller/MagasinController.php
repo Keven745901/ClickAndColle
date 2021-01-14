@@ -64,8 +64,11 @@ class MagasinController extends AbstractController
      */
     public function show(Magasin $magasin): Response
     {
+        $stock = $magasin->getStocks();
+
         return $this->render('magasin/show.html.twig', [
             'magasin' => $magasin,
+            'stock' => $stock
         ]);
     }
 

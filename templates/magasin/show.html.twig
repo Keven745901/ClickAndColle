@@ -26,6 +26,27 @@
         </tbody>
     </table>
 
+    <table class="table">
+        <tbody></tbody>
+            {% for p in stock %}
+                <tr>
+                    <th>Produit</th>
+                    <td>{{ p.idArticle.idTypeArticle.libelle }}</td>
+
+                    <th>Prix</th>
+                    <td>{{ p.idArticle.prix }}</td>
+
+                    <th>Stock</th>
+                    <td>{{ p.quantite > 0 ? 'En stock' : 'Plus disponible' }}</td>
+
+                    <th>Description</th>
+                    <td>{{ p.idArticle.idTypeArticle.description }}</td>
+                </tr>
+
+            {% endfor %}
+        </tbody>
+    <tbody>
+
     <a href="{{ path('magasin_index') }}">back to list</a>
 
     <a href="{{ path('magasin_edit', {'id': magasin.id}) }}">edit</a>
