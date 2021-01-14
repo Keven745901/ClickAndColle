@@ -3,12 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Magasin;
+use App\Entity\Article;
+use App\Repository\ArticleRepository;
 use App\Form\MagasinType;
 use App\Repository\MagasinRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @Route("/magasin")
@@ -62,10 +66,24 @@ class MagasinController extends AbstractController
     /**
      * @Route("/{id}", name="magasin_show", methods={"GET"})
      */
-    public function show(Magasin $magasin): Response
+    
+    public function show(Request $request, Magasin $magasin, ArticleRepository $produit): Response
     {
-        $stock = $magasin->getStocks();
+        if($request->query->get('produit') !== null)
+        {
+            $p = $request->query->get('produit');
+            $session = $request->getSession();
+            
+            $temp = [];
+            $temp = unserialize($session->get('panier'));
+            
+            $temp[] = $produit->find($p);
+            $produit->find($p)->getIdTypeArticle()->getLibelle(); //??????????????????????????????
+            $session->set('panier', serialize($temp));
+        
+        }
 
+        $stock = $magasin->getStocks();
         return $this->render('magasin/show.html.twig', [
             'magasin' => $magasin,
             'stock' => $stock
@@ -105,4 +123,5 @@ class MagasinController extends AbstractController
 
         return $this->redirectToRoute('magasin_index');
     }
+    
 }

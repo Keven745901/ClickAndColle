@@ -3,43 +3,45 @@
 {% block title %}Magasin index{% endblock %}
 
 {% block body %}
-
     <h1>Magasin index</h1>
-    <form action="{{ path('magasin_index') }}" method="get">
-        <input type="text" name="recherche" placeholder="Code Postal" />
-        <input type="submit" value="Recherche"> 
-        <br /><br />
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nom</th>
-                    <th>Description</th>
-                    <th>CodePostal</th>
-                    <th>actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for magasin in magasins %}
-                <tr>
-                    <td>{{ magasin.id }}</td>
-                    <td>{{ magasin.nom }}</td>
-                    <td>{{ magasin.description }}</td>
-                    <td>{{ magasin.codePostal }}</td>
-                    <td>
-                        <a href="{{ path('magasin_show', {'id': magasin.id}) }}">show</a>
-                        <a href="{{ path('magasin_edit', {'id': magasin.id}) }}">edit</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="5">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>CodePostal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('magasin_new') }}">Créér</a>
+        <br /> <br />
+        {% endif %}
+        {% for magasin in magasins %}
+            <tr>
+                <td><center>{{ magasin.id }}</center></td>
+                <td><center>{{ magasin.nom }}</center></td>
+                <td><center>{{ magasin.description }}</center></td>
+                <td><center>{{ magasin.codePostal }}</center></td>
+                
+                <td>
+                    <a href="{{ path('magasin_show', {'id': magasin.id}) }}">Voir</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('magasin_edit', {'id': magasin.id}) }}">Modifier les informations</a>
+                    <td>{{ include('magasin/_delete_form.html.twig') }}</td>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun magasin trouver</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-        <a href="{{ path('magasin_new') }}">Create new</a>
-    </form>
+    
 {% endblock %}

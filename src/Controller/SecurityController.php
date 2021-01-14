@@ -17,16 +17,14 @@ class SecurityController extends AbstractController
         // if ($this->getUser()) {
         //     return $this->redirectToRoute('target_path');
         // }
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        if($this->getUser()!==null && $this->getUser()->isVerified())
+        if($this->getUser()!==null)
         {
-            
-            $response = $this->forward('App\Controller\ArticleController::index');
-            return $this->redirectToRoute('article_index');
+            $response = $this->forward('App\Controller\MagasinController::index');
+            return $this->redirectToRoute('magasin_index');
         }
         else
         {

@@ -44,7 +44,7 @@ class MessageController extends AbstractController
     
         return $this->render('message/new.html.twig', [
             'users' => $user->findBy([
-                'roles'=>'["ROLE_ADMIN"]',
+                'roles'=>"[{ROLE_ADMIN: ROLE_ADMIN}]",
             ]),
         ]);
     }
