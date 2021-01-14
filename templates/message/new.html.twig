@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Message{% endblock %}
+
+{% block body %}
+    <h1>Envoyer un message à un vendeur</h1>
+
+
+    <p>Email client: </p>
+    <input name="emailcli" id="emailcli" placeholder="cli@gmail.com"></input>
+    <br />
+    <p>Email vendeur: </p>
+    <select name="emailvend" id="emailvend">
+    {% for user in users %}
+        <option value=>{{ user.email }}</option>
+    {% endfor %}
+    </select>
+    
+    <br />
+    <p>Titre: </p>
+    <input name="titremes" id="titremes" placeholder="Object du message"></input>
+    <br />
+    <p>Contenu: </p>
+    <textarea name="contenumes" id="contenumes" placeholder="Contenu du message"></textarea>
+    <br /><br />
+    <input type="submit" id="name" id="btnsubmit" value="Envoyer">
+    <br /><br />
+    <a href="{{ path('message_index') }}">back to list</a>
+{% endblock %}

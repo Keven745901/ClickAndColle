@@ -18,12 +18,22 @@ class ArticleController extends AbstractController
     /**
      * @Route("/", name="article_index", methods={"GET"})
      */
-    public function index(ArticleRepository $articleRepository): Response
+    public function index(Request $request, ArticleRepository $articleRepository): Response
     {
-        return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
-            
-        ]);
+        
+        $recherche = $request->query->get('recherche');
+
+        if(isset($recherche) && $recherche != ""){
+            return $this->render('article/index.html.twig', [
+                'articles' => $articleRepository->searchArticles($recherche),
+            ]);
+        }
+        else{
+            return $this->render('article/index.html.twig', [
+                'articles' => $articleRepository->findAll(),
+                
+            ]);
+        }
     }
 
     /**

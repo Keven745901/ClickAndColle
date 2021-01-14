@@ -22,11 +22,13 @@ class ArticleRepository extends ServiceEntityRepository
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function searchArticles($value)
     {
+        $value = "%".$value."%";
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
+            ->innerJoin('a.idTypeArticle', 'ta')
+            ->andWhere('ta.libelle LIKE :val')
             ->setParameter('val', $value)
             ->orderBy('a.id', 'ASC')
             ->setMaxResults(10)
@@ -34,7 +36,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Article
