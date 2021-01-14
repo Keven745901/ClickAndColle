@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeArticle index{% endblock %}
+
+{% block body %}
+    <h1>TypeArticle index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for type_article in type_articles %}
+            <tr>
+                <td>{{ type_article.id }}</td>
+                <td>{{ type_article.libelle }}</td>
+                <td>{{ type_article.description }}</td>
+                <td>
+                    <a href="{{ path('type_article_show', {'id': type_article.id}) }}">show</a>
+                    <a href="{{ path('type_article_edit', {'id': type_article.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('type_article_new') }}">Create new</a>
+{% endblock %}
