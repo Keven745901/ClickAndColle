@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PanierController!{% endblock %}
+{% block title %}Panier{% endblock %}
 
 {% block body %}
 <style>
@@ -10,16 +10,18 @@
 
 <form action="{{ path('commander') }}" method="get">
     <div>
-        <h1>Mon panier :white_check_mark:</h1>
-        <ul>
+        <br />
+        <center><h1>Mon panier</h1>
+        <br /><br /><br />
         {% if panier|length > 0 %}
         {% for i in 0..panier|length-1 %}
-            <li>{{ panier[i].idTypeArticle.libelle }} ({{ panier[i].prix }} €) Quantité : <input type=text value=1 name=txt{{i}}> </li>
+            {{ panier[i].idTypeArticle.libelle }} ({{ panier[i].prix }} €) Quantité : <input type=text value=1 name=txt{{i}} required="required">
+            <br /><br />
 
         {% endfor %}
         {% endif %}
-        </ul>
-        <input type="date" name="calendrier">
+
+        <input type="date" name="calendrier" required="required">
         <select name="heure">
         {% for h in 8..18 %}
             <option value = {{ h }}>{{h}}</option>
@@ -31,8 +33,8 @@
             <option value="30">30</option>
         </select>
         <br><br>
-        <a href="{{ path('reset') }}">Remettre à zéro</a>
-        <input type="submit" value="Commander">
+        <a href="{{ path('reset') }}"><input type="button" value="Remettre à zéro" class="btn btn-outline-primary"></a>
+        <input type="submit" value="Commander" class="btn btn-primary"></center>
     </div>
 </form>
 {% endblock %}

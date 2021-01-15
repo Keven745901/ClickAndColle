@@ -3,9 +3,10 @@
 {% block title %}tock{% endblock %}
 
 {% block body %}
+<br />
     <center><h1>Créer Stock</h1>
-
+<br /><br />
     {{ include('stock/_form.html.twig') }}
     <br />
-    <a href="{{ path('stock_index') }}"><input type="button" value="Retour"></a></center>
+    <a href="{{ path('stock_index') }}"><input type="button" value="Retour" class="btn btn-outline-primary"></a></center>
 {% endblock %}

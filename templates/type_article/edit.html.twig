@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit TypeArticle{% endblock %}
+{% block title %}TypeArticle{% endblock %}
 
 {% block body %}
-    <h1>Edit TypeArticle</h1>
+    <br />
+    <center><h1>Modifier TypeArticle</h1>
+    <br />
 
-    {{ include('type_article/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('type_article/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br />
+    <a href="{{ path('type_article_index') }}"><input type="button" value="Retour" class="btn btn-primary"></a></center>
 
-    <a href="{{ path('type_article_index') }}">back to list</a>
-
-    {{ include('type_article/_delete_form.html.twig') }}
+    
 {% endblock %}

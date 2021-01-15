@@ -5,9 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Header{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <link rel="preconnect" href="https://fonts.gstatic.com/%22%3E
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js%22%3E"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js%22%3E"></script>
+        <link rel="preconnect" href="https://fonts.gstatic.com/%22%3E">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <style type="text/css">
@@ -25,7 +25,7 @@
     </head>
     <body>{% block header %}
         {% include 'header.html.twig' %}{% endblock %}
-        {% block body %}{% endblock %}
+        <div style="margin-left:10%;margin-right:10%">{% block body %}{% endblock %}</div>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

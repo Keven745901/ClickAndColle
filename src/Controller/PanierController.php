@@ -36,7 +36,8 @@ class PanierController extends AbstractController
     public function reset(Request $request): Response
     {   
         $session = $request->getSession();
-        $session->clear();
+        $session->set('panier',null);
+        $session->set('magasin',null);
         $mesitemspanier = ($session->get('panier'));
         $mesitemspanier = unserialize($mesitemspanier);
     
@@ -154,10 +155,7 @@ class PanierController extends AbstractController
             $session->clear();
         }
         
-        return $this->render('panier/index.html.twig', [
-            'panier' => $mesitemspanier,
-        ]);
-        //return $this->redirect('/');
+        return $this->redirect('/');
     }
 }
 

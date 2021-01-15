@@ -61,7 +61,9 @@ class MessageController extends AbstractController
             $entityManager->persist($msgEnvoi);
             $entityManager->flush();
 
-            return $this->redirectToRoute('message_index');
+            return $this->render('message/new.html.twig', [
+                'users' => $user->findAdmin(),
+            ]);
         }
     
         return $this->render('message/new.html.twig', [

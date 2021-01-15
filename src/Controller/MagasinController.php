@@ -85,7 +85,7 @@ class MagasinController extends AbstractController
                 $temp = unserialize($session->get('panier'));
             }
             else{
-                $session->set('magasin', null);
+                $session->set('magasin', $magasin->getId());
             }
             
             $temp[] = $produit->find($p);

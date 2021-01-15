@@ -3,10 +3,11 @@
 {% block title %}Stock{% endblock %}
 
 {% block body %}
+<br />
     <center><h1>Liste des stocks</h1>
     <br /><br />
-    <a href="{{ path('stock_new') }}"><input type="button" value="Ajout d'un nouveau stock"></a>
-    <a href="{{ path('magasin_index') }}"><input type="button" value="Retour"></a></center>
+    <a href="{{ path('stock_new') }}"><input type="button" value="Ajout d'un nouveau stock" class="btn btn-primary"></a>
+    <a href="{{ path('magasin_index') }}"><input type="button" value="Retour" class="btn btn-outline-primary"></a></center>
     <br /><br />
     <table class="table">
         <tbody>
@@ -16,7 +17,7 @@
                 <td><center>{{ stock.getIdMagasin() }}</center></td>
                 <td><center>{{ stock.quantite }}</center></td>
                 <td>
-                    <center><a href="{{ path('stock_edit', {'id': stock.id}) }}"><input type="button" value="Modifier stock"></a></center>
+                    <center><a href="{{ path('stock_edit', {'id': stock.id}) }}"><input type="button" value="Modifier stock" class="btn btn-outline-primary"></a></center>
                 </td>
                 <td><center>{{ include('stock/_delete_form.html.twig') }}</center></td>
             </tr>

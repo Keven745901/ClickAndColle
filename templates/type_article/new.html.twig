@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New TypeArticle{% endblock %}
+{% block title %}TypeArticle{% endblock %}
 
 {% block body %}
-    <h1>Create new TypeArticle</h1>
-
+<br />
+    <center><h1>Créer Type Article</h1>
+    <br />
     {{ include('type_article/_form.html.twig') }}
-
-    <a href="{{ path('type_article_index') }}">back to list</a>
+    <br />
+    <a href="{{ path('type_article_index') }}"><input type="button" value="Retour" class="btn btn-primary"></a></center>
+    
 {% endblock %}

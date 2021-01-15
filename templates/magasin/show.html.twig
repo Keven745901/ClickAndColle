@@ -3,33 +3,24 @@
 {% block title %}Magasin{% endblock %}
 
 {% block body %}
-    <center><h1>Magasin</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <td>{{ magasin.nom }}</td>
-            </tr>
-            <tr>
-                <td>{{ magasin.description }}</td>
-            </tr>
-            <tr>
-                <td>{{ magasin.codePostal }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <br />
+    <center><h1>{{ magasin.nom }}</h1>
+    <br />
+    {{ magasin.description }}
+    <br />
+    {{ magasin.codePostal }}
     </center>
     <br />
     <center>
     {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('article_index') }}"><input type="button" value="Gestion Produits"></a>
+    <a href="{{ path('article_index') }}"><input type="button" value="Gestion Produits" class="btn btn-outline-primary"></a>
     {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('stock_index') }}"><input type="button" value="Gestion des stocks"></a>
+    <a href="{{ path('stock_index') }}"><input type="button" value="Gestion des stocks" class="btn btn-outline-primary"></a>
     {% endif %}
-    <a href="{{ path('magasin_index') }}"><input type="button" value="Retour"></a></center>
+    <a href="{{ path('magasin_index') }}"><button type="button" class="btn btn-primary">Retour</button></a></center>
     <br /><br />
-    <table class="table">
+    <table class="table table-hover table-secondary">
     <tbody>
         {% for p in stock %}
                 <tr>
@@ -39,11 +30,13 @@
                     <td><center>{{ p.idArticle.prix }}</center></td>
                     <td><center>{{ p.quantite }}</center></td>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <td><a href="{{ path('stock_edit', {'id': p.idArticle.id}) }}"><input type="button" value="Modifier stock"></a></td>
+                    <td><a href="{{ path('stock_edit', {'id': p.idArticle.id}) }}"><input type="button" value="Modifier stock" class="btn btn-outline-primary"></a></td>
                     {% endif %}
+                    {% if app.user is not null %}
                     <td {{ p.quantite > 0 ? '' : 'style="display:none"' }}>
-                    <a href="{{ path('magasin_show', {'id': magasin.id, 'produit': p.id}) }}"><input type="button" value="Ajouter au panier"></a>
-                    </td>                 
+                    <a href="{{ path('magasin_show', {'id': magasin.id, 'produit': p.idArticle.id}) }}"><input type="button" value="Ajouter au panier" class="btn btn-primary"></a>
+                    </td>
+                    {% endif %}                 
                 </tr>
             {% endfor %}
     </tbody>
