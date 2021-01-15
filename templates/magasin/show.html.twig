@@ -22,7 +22,7 @@
     <br />
     <center>
     {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('article_new') }}"><input type="button" value="Ajouter Produit"></a>
+    <a href="{{ path('article_index') }}"><input type="button" value="Gestion Produits"></a>
     {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('stock_index') }}"><input type="button" value="Gestion des stocks"></a>
