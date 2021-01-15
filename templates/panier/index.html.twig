@@ -12,10 +12,12 @@
     <div>
         <h1>Mon panier :white_check_mark:</h1>
         <ul>
+        {% if panier|length > 0 %}
         {% for i in 0..panier|length-1 %}
             <li>{{ panier[i].idTypeArticle.libelle }} ({{ panier[i].prix }} €) Quantité : <input type=text value=1 name=txt{{i}}> </li>
 
         {% endfor %}
+        {% endif %}
         </ul>
         <input type="date" name="calendrier">
         <select name="heure">
