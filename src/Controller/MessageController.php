@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UserRepository;
+use Symfony\Bundle\SwiftmailerBundle;
 /**
  * @Route("/message")
  */
@@ -43,9 +44,7 @@ class MessageController extends AbstractController
         }
     
         return $this->render('message/new.html.twig', [
-            'users' => $user->findBy([
-                'roles'=>"[{ROLE_ADMIN: ROLE_ADMIN}]",
-            ]),
+            'users' => $user->findAdmin(),
         ]);
     }
 
