@@ -10,7 +10,7 @@
         <center><input type="text" name="recherche" placeholder="Code Postal" />
         <button type="submit" class="btn btn-outline-primary">Rechercher</button>
         {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('magasin_new') }}"><button type="button" class="btn btn-outline-primary">Créer Magasin</button></a></center>
+        <a href="{{ path('magasin_new') }}"><button type="button" class="btn btn-primary">Créer Magasin</button></a></center>
         {% endif %}
         </center>
 

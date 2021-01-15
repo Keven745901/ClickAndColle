@@ -10,12 +10,12 @@
         <input type="text" name="recherche" placeholder="Nom" />
         <input type="submit" value="Recherche" class="btn btn-outline-primary">
         {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('article_new') }}"><input type="button" value="Créer Article" class="btn btn-outline-primary"></a>
+        <a href="{{ path('article_new') }}"><input type="button" value="Créer Article" class="btn btn-primary"></a>
         {% endif %}
         {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('type_article_new') }}"><input type="button" value="Créer Type Article" class="btn btn-outline-primary"></a>
+        <a href="{{ path('type_article_new') }}"><input type="button" value="Créer Type Article" class="btn btn-primary"></a>
         {% endif %}
-        <a href="{{ path('magasin_index') }}"><input type="button" value="Retour" class="btn btn-primary"></a></center>
+        <a href="{{ path('magasin_index') }}"><input type="button" value="Retour" class="btn btn-outline-primary"></a></center>
         <br><br><br />
         <table class="table table-hover table-secondary">
             <tbody>

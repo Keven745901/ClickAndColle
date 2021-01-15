@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
-
 {% block title %} Article{% endblock %}
 
 {% block body %}
+    <br />
     <center><h1>Modifier Article</h1>
-
+    <br /><br />
     {{ include('article/_form.html.twig', {'button_label': 'Update'}) }}
     <br />
-    <a href="{{ path('article_index') }}"><input type="button" value="Retour"></a></center>
+    <a href="{{ path('article_index') }}"><input type="button" value="Retour" class="btn btn-outline-primary"></a></center>
 
     
 {% endblock %}

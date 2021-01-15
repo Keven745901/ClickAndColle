@@ -13,12 +13,12 @@
     <br />
     <center>
     {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('article_index') }}"><input type="button" value="Gestion Produits" class="btn btn-outline-primary"></a>
+    <a href="{{ path('article_index') }}"><input type="button" value="Gestion Produits" class="btn btn-primary"></a>
     {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('stock_index') }}"><input type="button" value="Gestion des stocks" class="btn btn-outline-primary"></a>
+    <a href="{{ path('stock_index') }}"><input type="button" value="Gestion des stocks" class="btn btn-primary"></a>
     {% endif %}
-    <a href="{{ path('magasin_index') }}"><button type="button" class="btn btn-primary">Retour</button></a></center>
+    <a href="{{ path('magasin_index') }}"><button type="button" class="btn btn-outline-primary">Retour</button></a></center>
     <br /><br />
     <table class="table table-hover table-secondary">
     <tbody>
