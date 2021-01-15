@@ -42,78 +42,108 @@ class PanierController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        if($request->query->get('calendrier') !== "" && $request->query->get('heure') !== null && $request->query->get('minutes') !== null){
+        if($session->get('panier') !== null && $this->getUser() !== null){
+            if($request->query->get('calendrier') !== "" && $request->query->get('heure') !== null && $request->query->get('minutes') !== null){
 
-            $heure = $request->query->get('heure');
-            $minutes = $request->query->get('minutes');
-            $dateSQL = $request->query->get('calendrier') . " " . $heure . ":" . $minutes . ":00"; 
-            $dateSQL = \DateTime::createFromFormat('Y-m-d H:i:s',$dateSQL);
-
-            $creneaux = $creneauRepository->findBy(
-                ['dateCreneau' => $dateSQL,
-                 'idMagasin' => $session->get('magasin')
-                ]
-            );
-            if(count($creneaux) < 1){
-                
-
-
-                $u = $userRepository->find($this->getUser()->getId());
-                $m = $magasinRepository->find($session->get('magasin'));
-
-                $creneau = new Creneau();
-                $creneau->setDateCreneau($dateSQL);
-                $creneau->setEtatCreneau(1);
-                $creneau->setIdMagasin($m);
-                $creneau->setIdUser($u);
-                
-                $entityManager->persist($creneau);
-                $entityManager->flush();
-
-                
-                $commande = new Commande();
-                $commande->setDateCommande((\DateTime::createFromFormat('Y-m-d H:i:s',date('Y-m-d H:i:s'))));
-                $commande->setEtatCommande(1);
-
-                
-                
-                $commande->setIdMagasin($m);
-                $commande->setIdUser($u);
-
-                $entityManager->persist($commande);
-                $entityManager->flush();
-
-                $stocks = $m->getStocks();
-                $i=0;
-                foreach($mesitemspanier as $item){
-
-                    $ligne = new Contenir();
-                    $ligne->setQuantiteCommandee($request->query->get('txt'.$i));
-                    $ligne->setIdArticle($item);
-                    $ligne->setIdCommande($commande);
-
-                    $entityManager->persist($ligne);
-                    $entityManager->flush();
-                    $i++;
-                }
-                 // On crée le message
-                $message = (new \Swift_Message('Confirmation de commande'))
-                // On attribue l'expéditeur
-                ->setFrom("clickandcollect@gmail.com")
-                // On attribue le destinataire
-                ->setTo($u->getEmail())
-                // On crée le texte avec la vue
-                ->setBody("Votre commande a été valider avec succès !")
-                ;
-                $mailer->send($message);
-
-                $this->addFlash('message', 'Votre message a été transmis, nous vous répondrons dans les meilleurs délais.'); // Permet un message flash de renvoi
-            }
-        }
-        $session->clear();
-        
+                $heure = $request->query->get('heure');
+                $minutes = $request->query->get('minutes');
+                $dateSQL = $request->query->get('calendrier') . " " . $heure . ":" . $minutes . ":00"; 
+                $dateSQL = \DateTime::createFromFormat('Y-m-d H:i:s',$dateSQL);
     
-        return $this->redirect('/');
+                $creneaux = $creneauRepository->findBy(
+                    ['dateCreneau' => $dateSQL,
+                     'idMagasin' => $session->get('magasin')
+                    ]
+                );
+                if(count($creneaux) < 1){
+                    
+    
+    
+                    $u = $userRepository->find($this->getUser()->getId());
+                    $m = $magasinRepository->find($session->get('magasin'));
+    
+                    $creneau = new Creneau();
+                    $creneau->setDateCreneau($dateSQL);
+                    $creneau->setEtatCreneau(1);
+                    $creneau->setIdMagasin($m);
+                    $creneau->setIdUser($u);
+                    
+                    $entityManager->persist($creneau);
+                    $entityManager->flush();
+    
+                    
+                    $commande = new Commande();
+                    $commande->setDateCommande((\DateTime::createFromFormat('Y-m-d H:i:s',date('Y-m-d H:i:s'))));
+                    $commande->setEtatCommande(0);
+    
+                    
+                    
+                    $commande->setIdMagasin($m);
+                    $commande->setIdUser($u);
+    
+                    $entityManager->persist($commande);
+                    $entityManager->flush();
+    
+                    $stocks = $m->getStocks();
+                    $i=0;
+                    $annuler = false; 
+
+                    while($i < count($mesitemspanier) && $annuler == false){
+                        
+                        foreach($stocks as $stock){
+                            
+                            if($stock->getIdArticle()->getId() == $mesitemspanier[$i]->getId()){
+                                if($stock->getQuantite() - $request->query->get('txt'.$i) > 0){
+                                    echo "VRAI";
+                                    $stock->setQuantite($stock->getQuantite() - $request->query->get('txt'.$i));
+                                    $entityManager->persist($stock);
+                                    $entityManager->flush();
+                                }
+                                else{
+                                    $annuler = true;
+                                }
+                            }
+                        }
+                        
+                        if($annuler==false){
+                            $ligne = new Contenir();
+                            $ligne->setQuantiteCommandee($request->query->get('txt'.$i));
+                            $ligne->setIdArticle($mesitemspanier[$i]);
+                            $ligne->setIdCommande($commande);
+        
+                            $entityManager->persist($ligne);
+                            $entityManager->flush();
+                            $i++;
+                        }
+                    }
+                    
+                    if($annuler==false){
+                        $commande->setEtatCommande(1);
+                        $entityManager->persist($commande);
+                        $entityManager->flush();
+                        // On crée le message
+                    $message = (new \Swift_Message('Confirmation de commande'))
+                    // On attribue l'expéditeur
+                    ->setFrom("clickandcollect@gmail.com")
+                    // On attribue le destinataire
+                    ->setTo($u->getEmail())
+                    // On crée le texte avec la vue
+                    ->setBody("Votre commande a été valider avec succès !")
+                    ;
+                    $mailer->send($message);
+    
+                    $this->addFlash('message', 'Votre message a été transmis, nous vous répondrons dans les meilleurs délais.'); // Permet un message flash de renvoi
+                    }
+                    
+                }
+            }
+            $session->clear();
+        }
+        
+        return $this->render('panier/index.html.twig', [
+            'panier' => $mesitemspanier,
+        ]);
+        //return $this->redirect('/');
     }
 }
 
