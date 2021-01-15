@@ -20,8 +20,13 @@
     </table>
     </center>
     <br />
-    <center><a href="{{ path('article_new') }}"><input type="button" value="Ajouter Produit"></a>
+    <center>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('article_new') }}"><input type="button" value="Ajouter Produit"></a>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('stock_index') }}"><input type="button" value="Gestion des stocks"></a>
+    {% endif %}
     <a href="{{ path('magasin_index') }}"><input type="button" value="Retour"></a></center>
     <br /><br />
     <table class="table">
@@ -33,7 +38,9 @@
                      <td><center>{{ p.quantite > 0 ? 'En stock' : 'Plus disponible' }}</center></td>
                     <td><center>{{ p.idArticle.prix }}</center></td>
                     <td><center>{{ p.quantite }}</center></td>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <td><a href="{{ path('stock_edit', {'id': p.idArticle.id}) }}"><input type="button" value="Modifier stock"></a></td>
+                    {% endif %}
                     <td {{ p.quantite > 0 ? '' : 'style="display:none"' }}>
                     <a href="{{ path('magasin_show', {'id': magasin.id, 'produit': p.id}) }}"><input type="button" value="Ajouter au panier"></a>
                     </td>                 

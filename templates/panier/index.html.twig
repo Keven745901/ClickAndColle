@@ -10,13 +10,25 @@
 
 <form action="{{ path('commander') }}" method="get">
     <div>
-        <h1>Mon panier ✅</h1>
+        <h1>Mon panier :white_check_mark:</h1>
         <ul>
         {% for i in 0..panier|length-1 %}
             <li>{{ panier[i].idTypeArticle.libelle }} ({{ panier[i].prix }} €) Quantité : <input type=text value=1 name=txt{{i}}> </li>
-            
+
         {% endfor %}
         </ul>
+        <input type="date" name="calendrier">
+        <select name="heure">
+        {% for h in 8..18 %}
+            <option value = {{ h }}>{{h}}</option>
+        {% endfor %}
+        </select>
+        h
+        <select name="minutes">
+            <option value="00">00</option>
+            <option value="30">30</option>
+        </select>
+        <br><br>
         <input type="submit" value="Commander">
     </div>
 </form>

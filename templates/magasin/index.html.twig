@@ -7,7 +7,10 @@
 <form action="{{ path('magasin_index') }}" method="get">
         <center><input type="text" name="recherche" placeholder="Nom" />
         <input type="submit" value="Recherche">
+        {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('magasin_new') }}"><input type="button" value="Créer magasin"></a></center>
+        {% endif %}
+        </center>
         <br><br><br />
     <table class="table">
         <tbody>
