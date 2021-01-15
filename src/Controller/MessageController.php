@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UserRepository;
 use Symfony\Bundle\SwiftmailerBundle;
+use App\Entity\User;
+
 /**
  * @Route("/message")
  */
@@ -35,9 +37,28 @@ class MessageController extends AbstractController
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($request->query->get('btnsubmit') !== null && $request->query->get('emailvend') !== null) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($message);
+            $msgEnvoi = new Message();
+            $msgEnvoi->setTitre($request->query->get('titremes'));
+            $msgEnvoi->setContenu($request->query->get('contenumes'));
+            $msgEnvoi->setDateMessage((\DateTime::createFromFormat('Y-m-d H:i:s',date('Y-m-d H:i:s'))));
+
+
+            $vendeur = $user->find($request->query->get('emailvend'));;
+
+
+            if($this->getUser() !== null){
+                $u = $user->find($this->getUser()->getId());
+                $msgEnvoi->setIdClient($u);
+            }
+            else{
+                $msgEnvoi->setIdClient($vendeur);
+            }
+            
+            
+            $msgEnvoi->setIdVendeur($vendeur);
+            $entityManager->persist($msgEnvoi);
             $entityManager->flush();
 
             return $this->redirectToRoute('message_index');
