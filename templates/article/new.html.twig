@@ -1,11 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer Article{% endblock %}
+{% block title %}Création Article{% endblock %}
 
 {% block body %}
     <center><h1>Création d'un article</h1>
-
-    {{ include('article/_form.html.twig') }}
-    <br>
-    <a href="{{ path('article_index') }}"><input type="button" value="Retour"></a></center>
+    <br />
+    <form action="" method="get">
+        Prix:
+        <input name="prix" id="prix" placeholder="€"></input>
+        <br /><br />
+        Produit:
+        <select name="typeproduit" id="typeproduit">
+            {% for typeprod in typeproduits %}
+                <option value={{ typeprod.id }}>{{ typeprod.libelle }}</option>
+            {% endfor %}
+        </select>
+        <br /><br />
+        Quantité:
+        <input name="quantite" id="quantite" placeholder="quantite en stock"></input>
+        <br /><br />
+        Magasin:
+        <select name="magasin" id="magasin">
+            {% for magasin in magasins %}
+                <option value={{ magasin.id }}>{{ magasin.nom }}</option>
+            {% endfor %}
+        </select>
+        <br /><br />
+        <input type="submit" name="btnEnvoyer" id="btnEnvoyer" value="Envoyer" class="btn btn-outline-primary">
+        <br /><br />
+    </form>
+    <a href="{{ path('article_index') }}"><button type="button" class="btn btn-primary">Retour</button></a></center>
 {% endblock %}
+

@@ -3,14 +3,18 @@
 {% block title %}Magasin{% endblock %}
 
 {% block body %}
+    <br />
     <center><h1>Magasin</h1></center>
+    <br /><br/>
 <form action="{{ path('magasin_index') }}" method="get">
         <center><input type="text" name="recherche" placeholder="Nom" />
-        <input type="submit" value="Recherche">
+        <button type="submit" class="btn btn-outline-primary">Recherher</button>
         {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('magasin_new') }}"><button type="button" class="btn btn-primary">Créer Magasin</button></a></center>
         {% endif %}
         </center>
+
+        
         <br><br><br />
     <table class="table">
         <tbody>
@@ -25,9 +29,9 @@
                 <td><center>{{ magasin.codePostal }}</center></td>
 
                 <td>
-                    <a href="{{ path('magasin_show', {'id': magasin.id}) }}"><input type="button" value="Voir"></a>
+                    <a href="{{ path('magasin_show', {'id': magasin.id}) }}"><input type="button" value="Voir" class="btn btn-outline-primary"></a>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('magasin_edit', {'id': magasin.id}) }}"><input type="button" value="Modifier les informations"></a>
+                    <a href="{{ path('magasin_edit', {'id': magasin.id}) }}"><input type="button" value="Modifier les informations" class="btn btn-primary"></a>
                     <td>{{ include('magasin/_delete_form.html.twig') }}</td>
                     {% endif %}
                 </td>

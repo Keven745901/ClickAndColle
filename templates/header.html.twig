@@ -1,9 +1,48 @@
-<div class="navbar">
-        <a href="{{ path('magasin_index') }}">Accueil</a>
-        <a href="{{ path('article_index') }}">Produits</a>
-        <a href="/register">Créer un compte</a>
-        <a href="/login">Connexion</a>
-        <a href="/logout">Déconnexion</a>
-        <a href="{{ path('panier') }}">Panier</a>
-        <a href="{{ path('message_new') }}">Envoyer un message</a>
-</div>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#"></a>
+  
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('magasin_index') }}">Accueil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('article_index') }}">Produits</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('message_new') }}">Envoyer un message</a>
+        </li>
+        {% if app.user is not null %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('panier') }}">Panier</a>
+        </li>
+        {% endif %}
+        {% if app.user is null %}
+        <li class="nav-item">
+          
+            <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+            
+        </li>
+        {% endif %}
+        {% if app.user is not null %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+        </li>
+        {% endif %}
+        {% if app.user is null %}
+        <li class="nav-item">
+          
+          <a class="nav-link" href="/register">Créer un compte</a>
+
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>

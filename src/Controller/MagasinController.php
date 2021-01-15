@@ -89,7 +89,7 @@ class MagasinController extends AbstractController
             }
             
             $temp[] = $produit->find($p);
-            $produit->find($p)->getIdTypeArticle()->getLibelle(); //??????????????????????????????
+            $produit->find($p)->getIdTypeArticle()->getLibelle(); //?
             $session->set('panier', serialize($temp));
         
         }

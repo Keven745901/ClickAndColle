@@ -31,6 +31,21 @@ class PanierController extends AbstractController
     }
 
     /**
+     * @Route("/panier/reset", name="reset")
+     */
+    public function reset(Request $request): Response
+    {   
+        $session = $request->getSession();
+        $session->clear();
+        $mesitemspanier = ($session->get('panier'));
+        $mesitemspanier = unserialize($mesitemspanier);
+    
+        return $this->render('panier/index.html.twig', [
+            'panier' => $mesitemspanier,
+        ]);
+    }
+
+    /**
      * @Route("/commander", name="commander")
      */
     public function commander(Request $request, MagasinRepository $magasinRepository, UserRepository $userRepository, CreneauRepository $creneauRepository, \Swift_Mailer $mailer): Response
@@ -94,7 +109,6 @@ class PanierController extends AbstractController
                             
                             if($stock->getIdArticle()->getId() == $mesitemspanier[$i]->getId()){
                                 if($stock->getQuantite() - $request->query->get('txt'.$i) > 0){
-                                    echo "VRAI";
                                     $stock->setQuantite($stock->getQuantite() - $request->query->get('txt'.$i));
                                     $entityManager->persist($stock);
                                     $entityManager->flush();

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Stock;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\TypeArticleRepository;
 use App\Repository\MagasinRepository;
+use App\Repository\StockRepository;
 
 /**
  * @Route("/article")
@@ -30,7 +32,7 @@ class ArticleController extends AbstractController
                 'articles' => $articleRepository->searchArticles($recherche),
             ]);
         }
-        else{
+        else{   
             return $this->render('article/index.html.twig', [
                 'articles' => $articleRepository->findAll(),
                 
@@ -41,18 +43,40 @@ class ArticleController extends AbstractController
     /**
      * @Route("/new", name="article_new", methods={"GET","POST"})
      */
-    public function new(Request $request, TypeArticleRepository $typearticle, MagasinRepository $magasin): Response
+    public function new(Request $request, TypeArticleRepository $typearticle, MagasinRepository $magasin, StockRepository $stockRepository): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
         
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($request->query->get('btnEnvoyer')) {
+
+            $article->setPrix($request->query->get('prix'));
+            $ta = $typearticle->find($request->query->get('typeproduit'));
+            $article->setIdTypeArticle($ta);
+            
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($article);
             $entityManager->flush();
 
-            return $this->redirectToRoute('article_index');
+            $stock = new Stock();
+            $stock->setIdArticle($article);
+            $stock->setQuantite($request->query->get('quantite'));
+            $m = $magasin->find($request->query->get('magasin'));
+            $stock->setIdMagasin($m);
+            $entityManager->persist($stock);
+            $entityManager->flush();
+            
+
+
+            //return $this->redirectToRoute('article_index');
+            return $this->render('article/new.html.twig', [
+                'article' => $article,
+                'typeproduits' => $typearticle->findAll(),
+                'magasins' => $magasin->findAll(),
+                'form' => $form->createView(),
+            ]);
         }
 
         return $this->render('article/new.html.twig', [
